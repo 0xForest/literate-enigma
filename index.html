@@ -5,31 +5,26 @@
   <title>Obsidian Widget</title>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      background: #363636;
-      overflow: hidden;  /* Remove scrollbars */
-      width: 100%;
-      height: 100%;
-      font-family: monospace;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    margin: 0;
+    padding: 0;
+    background: #363636;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
 
     #output {
-      color: #0f0;
-      font-size: 1em;
-      white-space: pre-wrap;        /* Allows wrapping! */
-      word-wrap: break-word;        /* Forces wrap even inside long "words" */
-      width: 100%;
-      height: 100%;
-      overflow: hidden;             /* Prevent overflow */
-      box-sizing: border-box;
-      padding: 1em;
-      text-align: center;
-      display: block;               /* Ensure it scales properly */
-      word-break: break-all;        /* Handle long lines properly */
+    color: #0f0;
+    font-size: 1vw; /* scales with width */
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-width: 100%;
+    padding: 1em;
+    text-align: center;
     }
   </style>
 </head>
@@ -58,6 +53,18 @@
     function setColour(hexString) {
       colour = hexString;
     }
+
+    function sendHeight() {
+    const height = document.body.scrollHeight;
+    window.parent.postMessage({
+        source: 'obsidian-widget',
+        height: height
+    }, '*');
+    }
+
+    // Call after render
+    setInterval(sendHeight, 200); // Updates every 200ms
+
   </script>
 </body>
 </html>
